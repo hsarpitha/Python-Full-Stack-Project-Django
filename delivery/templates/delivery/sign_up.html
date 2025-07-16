@@ -1,0 +1,26 @@
+{% extends "delivery/base.html" %} {% block content %}
+<form method="POST" action="{% url 'delivery:handle_signup' %}">
+{% csrf_token %}<br />
+    <label>Username</label>
+    <input type="text" name="username"/>
+    <br />
+    <br />
+    <label>Password</label>
+    <input type="password" name="password"/>
+    <br />
+    <br />
+    <label>Email</label>
+    <input type="email" name="email"/>
+    <br />
+    <br />
+    <label>Mobile</label>
+    <input type="mobile" name="mobile"/>
+    <br />
+    <br />
+    <label>Address</label>
+    <input type="address" name="address"/>
+    <br />
+    <br />
+    <button>Sign Up</button>
+</form>
+{% endblock %}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Delivery</title>
+    <style>
+      nav {
+        background-color: #333;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-links {
+        display: flex;
+        gap: 15px;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: white;
+        padding: 10px 15px;
+        background-color: #555;
+        border-radius: 5px;
+      }
+      .nav-links a:hover {
+        background-color: #777;
+      }
+    </style>
+</head>
+<body>
+    <nav>
+      <h2 style="color: white">Food Delivery</h2>
+      <div class="nav-links">
+        <a href="{% url 'delivery:cusdisplay_res' username %}">View Restaurants</a>
+        <a href="{% url 'delivery:sign_in' %}">Sign In</a>
+        <a href="{% url 'delivery:sign_up' %}">Sign Up</a>
+      </div>
+    </nav>
+  </body>
+</html>
+
+<html>
+    <head>
+    <title>Menu - {{ res.Res_name }}</title>
+    </head>
+    <body>
+        <h2>Menu for {{ res.Res_name }}</h2>
+        <p>Address: {{ res.address }}</p>
+        <p>Category: {{ res.Food_cat }}</p>
+        <p>Rating: {{ res.rating }}</p>
+        <a href="{% url 'delivery:show_cart' username %}">Show Cart</a>
+
+    <table border="1" style="width: 99vw">
+        <tr>
+            <th>Item Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Availability</th>
+            <th>Category</th>
+            <th>Actions</th>
+            <!-- New column for Delete Button -->
+        </tr>
+        {% for item in menu %}
+    <tr>
+        <td>{{ item.item_name }}</td>
+        <td>{{ item.description }}</td>
+        <td>${{ item.price }}</td>
+        <td>
+          <img
+          src="{{ item.img }}"
+          alt="Menu Image"
+          heigth="100"
+          width="100"
+          />
+      </td>
+        <td>
+          {% if item.is_available %}Available{% else %}Not Available{% endif %}
+        </td>
+        <td>{{ item.category }}</td>
+        <td>
+          <form
+            method="POST"
+            action="{% url 'delivery:add_to_cart' item.id username %}"
+            >
+            {% csrf_token %}
+            <button type="submit" 
+            onclick="return confirm('Are you sure you want to add to cart?')"
+            >Add to Cart</button>
+          </form>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6">No menu items available.</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <!-- Add Menu Button Below the Table -->
+    <br />
+    <a href="{}">
+    
+    </a>
+</body>
+</html>

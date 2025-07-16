@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Delivery</title>
+    <style>
+      nav {
+        background-color: #333;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-links {
+        display: flex;
+        gap: 15px;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: white;
+        padding: 10px 15px;
+        background-color: #555;
+        border-radius: 5px;
+      }
+      .nav-links a:hover {
+        background-color: #777;
+      }
+    </style>
+</head>
+<body>
+    <nav>
+      <h2 style="color: white">Food Delivery</h2>
+      <div class="nav-links">
+        <a href="{% url 'delivery:cusdisplay_res' username %}">View Restaurants</a>
+        <a href="{% url 'delivery:sign_in' %}">Sign In</a>
+        <a href="{% url 'delivery:sign_up' %}">Sign Up</a>
+      </div>
+    </nav>
+    {% block content %} {% endblock %}
+  </body>
+</html>
+
+<div style="margin-top: 50px"></div>
+<h1>Hi {{username}} Explore the menu...!</h1>
+<table border="1" style="width: 99vw">
+    <tr>
+        <th>Restaurant Name</th>
+        <th>Category</th>
+        <th>Rating</th>
+        <th>Image</th>
+        <th>Address</th>
+        <th>View Menu</th>
+    </tr>
+    {% for item in li %}
+    <tr>
+        <td>{{ item.Res_name }}</td>
+        <td>{{ item.Food_cat }}</td>
+        <td>{{ item.rating }}/5</td>
+        <td>
+            <img
+            src="{{ item.img }}"
+            alt="Restaurant Image"
+            heigth="100"
+            width="100"
+            />
+        </td>
+        <td>{{ item.address }}</td>
+        <td>
+            <a href="{% url 'delivery:cusmenu' item.id username %}">
+            <button>View Menu</button>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

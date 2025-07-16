@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Delivery</title>
+    <style>
+      nav {
+        background-color: #333;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-links {
+        display: flex;
+        gap: 15px;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: white;
+        padding: 10px 15px;
+        background-color: #555;
+        border-radius: 5px;
+      }
+      .nav-links a:hover {
+        background-color: #777;
+      }
+       .cart-container {
+        margin: 20px;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        max-width: 600px;
+        background-color: #f9f9f9;
+      }
+      .checkout-btn {
+        display: block;
+        margin-top: 20px;
+        padding: 10px 15px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+      }
+      .checkout-btn:hover {
+        background-color: darkgreen;
+      }
+    </style>
+</head>
+<body>
+    <nav>
+      <h2 style="color: white">Food Delivery</h2>
+      <div class="nav-links">
+        <a href="{% url 'delivery:cusdisplay_res' username %}">View Restaurants</a>
+        <a href="{% url 'delivery:sign_in' %}">Sign In</a>
+        <a href="{% url 'delivery:sign_up' %}">Sign Up</a>
+      </div>
+    </nav>
+    {% block content %} {% endblock %}
+  </body>
+</html>
+
+<div class="cart-container">
+    <h3>Your Cart</h3>
+    {% if items %}
+    <ul>
+      {% for item in items %}
+      <li>{{ item.item_name }} - ${{ item.price }}</li>
+      {% endfor %}
+    </ul>
+    <p><strong>Total Price:</strong> ${{ total_price }}</p>
+
+    <!-- Checkout Button -->
+    <a href="{% url 'delivery:checkout' username %}" class="checkout-btn"
+      >Proceed to Checkout</a
+    >
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
+

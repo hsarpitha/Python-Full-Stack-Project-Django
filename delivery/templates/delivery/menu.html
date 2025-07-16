@@ -1,0 +1,64 @@
+{% extends "delivery/base.html" %} {% block content %}
+<html>
+    <head>
+    <title>Menu - {{ res.Res_name }}</title>
+    </head>
+    <body>
+        <h2>Menu for {{ res.Res_name }}</h2>
+        <p>Address: {{ res.address }}</p>
+        <p>Category: {{ res.Food_cat }}</p>
+        <p>Rating: {{ res.rating }}</p>
+
+    <table border="1" style="width: 99vw">
+        <tr>
+            <th>Item Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Availability</th>
+            <th>Category</th>
+            <th>Actions</th>
+            <!-- New column for Delete Button -->
+        </tr>
+        {% for item in menu %}
+    <tr>
+        <td>{{ item.item_name }}</td>
+        <td>{{ item.description }}</td>
+        <td>${{ item.price }}</td>
+        <td>
+          <img
+          src="{{ item.img }}"
+          alt="Menu Image"
+          heigth="100"
+          width="100"
+          />
+        </td>
+        <td>
+          {% if item.is_available %}Available{% else %}Not Available{% endif %}
+        </td>
+        <td>{{ item.category }}</td>
+        <td>
+          <!-- Delete Button as an <a> tag -->
+          <a
+            href="{% url 'delivery:delete_menu' item.id %}"
+            onclick="return confirm('Are you sure you want to delete this item?');"
+          >
+            <button>Delete</button>
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6">No menu items available.</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <!-- Add Menu Button Below the Table -->
+    <br />
+    <a href="{% url 'delivery:add_menu' res.id %}">
+      <button>Add Menu</button>
+    </a>
+</body>
+</html>
+{% endblock %}
